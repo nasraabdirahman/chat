@@ -2,84 +2,8 @@
 <html>
 <head>
     <title>Login - Chat App</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: Arial, sans-serif; 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .login-container {
-            background: white;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 400px;
-        }
-        h2 { 
-            text-align: center; 
-            margin-bottom: 30px;
-            color: #333;
-        }
-        input { 
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
-        }
-        button { 
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 10px;
-            border: none;
-            border-radius: 4px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .btn-register {
-            background: #667eea;
-            color: white;
-        }
-        .btn-register:hover {
-            background: #5568d3;
-        }
-        .btn-login {
-            background: #764ba2;
-            color: white;
-        }
-        .btn-login:hover {
-            background: #653a8a;
-        }
-        .message { 
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 4px;
-            text-align: center;
-        }
-        .error { 
-            background: #fee;
-            color: #c33;
-            border: 1px solid #fcc;
-        }
-        .success { 
-            background: #efe;
-            color: #3c3;
-            border: 1px solid #cfc;
-        }
-    </style>
+        <link rel="stylesheet"
+      href="{{ url_for('static', filename='css/login.css') }}">
 </head>
 <body>
  
@@ -96,60 +20,7 @@
 </div>
  
 <script src="https://cdn.socket.io/4.0.1/socket.io.js"></script>
-<script>
-const socket = io();
- 
-function showMessage(text, type) {
-    const messageDiv = document.getElementById("message");
-    messageDiv.textContent = text;
-    messageDiv.className = "message " + type;
-}
- 
-function register() {
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value;
-    
-    if (!username || !password) {
-        showMessage("Enter username and password", "error");
-        return;
-    }
-    
-    socket.emit("register", {username, password});
-}
- 
-function login() {
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value;
-    
-    if (!username || !password) {
-        showMessage("Enter username and password", "error");
-        return;
-    }
-    
-    socket.emit("login", {username, password});
-}
- 
-socket.on("register_response", (data) => {
-    if (data.error) {
-        showMessage(data.error, "error");
-    } else {
-        showMessage("Account created! Now login.", "success");
-        document.getElementById("username").value = "";
-        document.getElementById("password").value = "";
-    }
-});
- 
-socket.on("login_response", (data) => {
-    if (data.error) {
-        showMessage(data.error, "error");
-    } else {
-        // Store username in sessionStorage so chat page can access it
-        sessionStorage.setItem('username', data.username);
-        // Redirect to chat page after successful login
-        window.location.href = "/";
-    }
-});
-</script>
+<script src="{{ url_for('static', filename='js/login.js') }}"></script>
  
 </body>
 </html>

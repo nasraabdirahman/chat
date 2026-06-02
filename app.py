@@ -3,7 +3,7 @@ from flask_socketio import SocketIO, emit
 from routes import register_routes
 from userAuth import register_user, login_user
 
-app = Flask(__name__, template_folder='templates')
+app = Flask(__name__, template_folder='templates', static_folder='public')
 app.config['SECRET_KEY'] = 'your-secret-key-change-this'
 socketio = SocketIO(app, cors_allowed_origins="*")
 register_routes(app)
